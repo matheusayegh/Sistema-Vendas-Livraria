@@ -1,0 +1,110 @@
+livros = {
+    "DOM CASMURRO": 10,
+    "O PEQUENO PRÍNCIPE": 15,
+    "HARRY POTTER E A PEDRA FILOSOFAL": 20.2,
+    "1984": 25,
+    "A REVOLUÇÃO DOS BICHOS": 29,
+    "O HOBBIT": 35,
+    "PERCY JACKSON E LADRÃO DE RAIOS": 13,
+    "CAPITÕES DE AREIA": 18,
+    "MEMÓRIAS PÓSTUMAS DE BRÁS CUBAS": 28,
+    "O CORTIÇO": 35,
+    "A CULPA É DAS ESTRELAS": 52,
+    "SENHORA": 43,
+    "OS LUSIÁDAS": 40,
+    "A MENINA QUE ROUBAVA LIVROS": 60
+}
+
+
+def realizar_venda():
+    print(livros)
+    livro = str(input("Digite o nome do livro escolhido pelo cliente: ")).upper()
+
+    if livro in livros:
+        print(f'O valor do livro {livro} é {livros[livro]:.2f} R$')
+        pagamento = str(input("Digite o método de pagamento, Dinheiro, Débito ou Crédito: ")).upper()
+
+        while pagamento not in ("DINHEIRO", "DÉBITO", "CRÉDITO", "DEBITO", "CREDITO"):
+            pagamento = str(input("Opção inválida. Digite Dinheiro, Débito ou Crédito: ")).upper()
+
+        revisar_pagamento(livro)
+    else:
+        print(f'O livro {livro} está fora de estoque.')
+
+
+def revisar_pagamento(livro):
+    preco = livros[livro]
+    valor_a = float(input("Digite o valor do pagamento: R$ "))
+
+    if valor_a == preco:
+        print('Volte sempre!')
+
+    elif valor_a > preco:
+        troco = valor_a - preco
+        print(f'Seu troco é R$ {troco:.2f}')
+        print('Volte sempre!')
+
+    else:
+        resto = preco - valor_a
+        valor = float(input(f'Faltam R$ {resto:.2f}. Digite o valor restante: '))
+
+        if valor == resto:
+            print('Volte sempre!')
+        elif valor > resto:
+            troco = valor - resto
+            print(f'Seu troco está aqui: R$ {troco:.2f}')
+            print('Volte sempre!')
+        else:
+            print('Valor insuficiente!')
+
+
+def cadastrar_livro():
+    novo_livro = str(input("Digite o nome do livro que deseja cadastrar: ")).upper()
+
+    if novo_livro in livros:
+        print(f"O livro '{novo_livro}' já está cadastrado.")
+        return
+
+    preco = float(input("Digite o preço do livro: R$ "))
+    livros[novo_livro] = preco
+    print(f"Livro '{novo_livro}' cadastrado com sucesso por R$ {preco:.2f}!")
+
+
+def remover_livro():
+    print(livros)
+    livro_removido = str(input("Digite o livro a ser removido: ")).upper()
+
+    if livro_removido in livros:
+        del livros[livro_removido]
+        print(f"Livro '{livro_removido}' removido com sucesso!")
+    else:
+        print(f"O livro '{livro_removido}' não foi encontrado.")
+
+
+def menu():
+    while True:
+        print("\n" + "=" * 40)
+        print("          LIVRARIA - MENU PRINCIPAL")
+        print("=" * 40)
+        print("  1 - Realizar venda")
+        print("  2 - Cadastrar livro")
+        print("  3 - Remover livro")
+        print("  0 - Sair")
+        print("=" * 40)
+
+        opcao = input("Escolha uma opção: ").strip()
+
+        if opcao == "1":
+            realizar_venda()
+        elif opcao == "2":
+            cadastrar_livro()
+        elif opcao == "3":
+            remover_livro()
+        elif opcao == "0":
+            print("\n Encerrando o sistema. Até logo!")
+            break
+        else:
+            print("\n Opção inválida. Tente novamente.")
+
+
+menu()
